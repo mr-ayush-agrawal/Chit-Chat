@@ -6,8 +6,8 @@ const app = express();
 import authRoutes from './routes/auth.routes.js'
 import connectDB from "./DataBase/connection.js";
 
+app.use(express.json());
 app.use('/auth', authRoutes)   // localhost:5000/auth
-
 
 connectDB()
     .then(() => {
