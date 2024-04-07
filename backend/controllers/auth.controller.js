@@ -1,5 +1,6 @@
 import bcrypt from 'bcrypt'
 import User from '../models/user.model.js'
+import genTokenAndCookie from '../utils/generateToken.js'
 
 const login = async (req, res) =>{
     console.log("Login")
@@ -40,6 +41,8 @@ const signup = async (req, res) =>{
             profilePic
         });
 
+
+        genTokenAndCookie(newUser._id, res);
         await newUser.save();
 
         // We can skip this for as requiring a lot of db calls
