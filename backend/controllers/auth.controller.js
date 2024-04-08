@@ -13,8 +13,6 @@ const login = async (req, res) =>{
             return res.status(400).json({err : "Invalid User or password"});
     
         genTokenAndCookie(user._id, res);
-    console.log(user.username)
-    
         res.status(200).json({
             _id : user._id, 
             username : user.username,
@@ -28,8 +26,17 @@ const login = async (req, res) =>{
 }
 
 const logout = async (req, res) =>{
-    console.log("Logout")
-    
+    try {
+        res.cookie('jwt', '', {
+            maxAge : 0
+        })
+        res.status(200).json({
+            message: "Logged Out Successful"
+        })
+    } catch (error) {
+        console.log("Error in Login controller")
+        res.status(500).json({error : error})
+    }    
 }
 
 const signup = async (req, res) =>{
