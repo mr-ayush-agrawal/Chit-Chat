@@ -3,7 +3,28 @@ import User from '../models/user.model.js'
 import genTokenAndCookie from '../utils/generateToken.js'
 
 const login = async (req, res) =>{
-    console.log("Login")
+    try {
+        const {username, password} = req.body;
+        const user = await User.findOne({username});
+        const correctPassword = await bcrypt.compare(password, user?.password || "");
+
+        
+        if(!user || !correctPassword)
+            return res.status(400).json({err : "Invalid User or password"});
+    
+        genTokenAndCookie(user._id, res);
+    console.log(user.username)
+    
+        res.status(200).json({
+            _id : user._id, 
+            username : user.username,
+            fullname : user.fullname
+        })
+        
+    } catch (error) {
+        console.log("Error in Login controller")
+        res.status(500).json({error : error})
+    }
 }
 
 const logout = async (req, res) =>{
