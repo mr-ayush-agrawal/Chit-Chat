@@ -3,16 +3,16 @@ import Message from "../models/message.model.js"
 
 const sendMessage = async(req, res) => {
     try {
-        const message = req.body;
+        const {message} = req.body;
         const {id : reciverId} = req.params;
-        const senderId = req.user._id
-
+        const senderId = req.user._id;
+        
         let convo = await Conversation.findOne({
             participants : {
                 $all : [senderId, reciverId]
             }
         })        
-
+        
         if(!convo){
             console.log("Creating New Conversation");
             convo = await Conversation.create({
@@ -30,10 +30,16 @@ const sendMessage = async(req, res) => {
             convo.messages.push(newMessage._id);
         }
     
+        // await convo.save();
+        // await newMessage.save();
+
+        // Ṭhis will run both tasks parallel
+        Promise.all([convo.save(), newMessage.save()]);
+
         res.status(201).json(newMessage)
     } 
     catch (error) {
-        console.log("Error in send Message Controller", error.message)
+        console.log("Error in send Message Controller : ", error.message)
         res.status(500).json({ error })
     }
 }

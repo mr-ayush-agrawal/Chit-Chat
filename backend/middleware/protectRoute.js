@@ -1,10 +1,11 @@
 import jwt from 'jsonwebtoken';
-import User from '../models/user.model,js';
+import User from '../models/user.model.js';
 
 
 const protectRoute = async (req, res, next) => {
     try {
         const token = req.cookies.AccessToken;
+        
         if(!token){
             return res.status(401).json({"error" : "Unauthorised Access - No Token Provided"})
         }
@@ -21,6 +22,7 @@ const protectRoute = async (req, res, next) => {
         }
 
         req.user = user;
+
         next();
 
     } catch (error) {
