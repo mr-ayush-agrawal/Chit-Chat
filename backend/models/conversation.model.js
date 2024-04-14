@@ -1,5 +1,6 @@
-import { config } from "dotenv";
 import mongoose from "mongoose";
+import Message from './message.model.js'
+import User from './user.model.js'
 
 const ConversationSchema = new mongoose.Schema({
     participants: [{
