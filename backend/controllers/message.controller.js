@@ -1,22 +1,22 @@
 import Conversation from "../models/conversation.model.js";
 import Message from "../models/message.model.js"
 
-const sendMessage = async(req, res) => {
+const sendMessage = async (req, res) => {
     try {
-        const {message} = req.body;
-        const {id : reciverId} = req.params;
+        const { message } = req.body;
+        const { id: reciverId } = req.params;
         const senderId = req.user._id;
-        
+
         let convo = await Conversation.findOne({
-            participants : {
-                $all : [senderId, reciverId]
+            participants: {
+                $all: [senderId, reciverId]
             }
-        })        
-        
-        if(!convo){
+        })
+
+        if (!convo) {
             console.log("Creating New Conversation");
             convo = await Conversation.create({
-                participants : [senderId, reciverId],
+                participants: [senderId, reciverId],
             })
         }
 
@@ -26,10 +26,10 @@ const sendMessage = async(req, res) => {
             message
         })
 
-        if(newMessage){
+        if (newMessage) {
             convo.messages.push(newMessage._id);
         }
-    
+
         // await convo.save();
         // await newMessage.save();
 
@@ -37,13 +37,35 @@ const sendMessage = async(req, res) => {
         Promise.all([convo.save(), newMessage.save()]);
 
         res.status(201).json(newMessage)
-    } 
+    }
     catch (error) {
         console.log("Error in send Message Controller : ", error.message)
         res.status(500).json({ error })
     }
 }
 
+const getMessage = async (req, res) => {
+    try {
+        const { id: userToChat } = req.params;
+        const senderId = req.user._id;
+
+        const conversation = await Conversation.findOne({
+            participants: { $all: [senderId, userToChat] }
+        }).populate("messages") // Not message but actual messgae
+
+        if (!conversation){
+            return res.status(200).json([])
+        }
+
+        res.status(200).json(conversation.messages)
+
+    } catch (error) {
+        console.log("Error in get Message Controller : ", error.message)
+        res.status(500).json({ error })
+    }
+}
+
 export {
-    sendMessage
+    sendMessage,
+    getMessage
 }
