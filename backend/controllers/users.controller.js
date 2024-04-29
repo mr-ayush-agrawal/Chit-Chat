@@ -8,7 +8,7 @@ const getAllUsers = async (req, res) => {
             _id : {
                 $ne : currUserId
             }
-        });
+        }).select("-password");
 
         res.status(200).json(allUsers)
 
