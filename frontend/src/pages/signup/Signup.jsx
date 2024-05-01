@@ -1,6 +1,8 @@
+import { useState } from "react"
 import GenderBox from "./GenderCheckbox"
 
 const SignUp = () => {
+
     return (
         <div className="flex flex-col items-center justify-center min-w-96 mx-auto">
             <div className="w-full p-6 rounded-lg shadow-mg bg-gray-400 bg-clip-padding
@@ -54,7 +56,7 @@ const SignUp = () => {
 
                     <GenderBox />
 
-                    <a href="#" className="text-sm hover:underline hover:text-blue-600 mt-2 inline-block">
+                    <a href="/login" className="text-sm hover:underline hover:text-blue-600 mt-2 inline-block">
                         Already a member ?
                     </a>
 
