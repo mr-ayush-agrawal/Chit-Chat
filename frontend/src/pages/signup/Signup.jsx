@@ -1,5 +1,6 @@
 import { useState } from "react"
 import GenderBox from "./GenderCheckbox"
+import useSignup from "../../hooks/useSignup"
 
 const SignUp = () => {
 
@@ -11,13 +12,16 @@ const SignUp = () => {
         gender: ''
     })
 
+    const {loading, signup} = useSignup()
+
     const handleCheckbox = (gender) => {
         setInputs({...Inputs, gender})
     }
 
-    const handleSumbit = (e) =>{
+    const handleSumbit = async(e) =>{
         e.preventDefault();
         console.log(Inputs)
+        await signup(Inputs)
     }
 
     return (
