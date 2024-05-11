@@ -4,14 +4,14 @@ import toast from "react-hot-toast";
 const useSignup = () => {
     const [loading, setLoading] = useState(false);
     
-    const signup = async ( fullname, username, password, cnfpassword, gender) => {
+    const signup = async (Input) => {
+        const {fullname, username, password, cnfpassword, gender} = Input
         const success = handleInputErrors( fullname, username, password, cnfpassword, gender)
         if(!success)
             return;
 
         setLoading(true);
         try {
-            console.log("INput", fullname, username, password, cnfpassword, gender)
             const res = await fetch("/auth/signup", {
                 method: "POST",
                 headers: { "Content-Type" : "application/json" },
@@ -45,10 +45,10 @@ function handleInputErrors( fullname, username, password, cnfpassword, gender){
         return false
     }
 
-    if(password.lenght < 6){
-        toast.error("Password must be 6 character long");
-        return false
-    }
+    // if(password.lenght < 6){
+    //     toast.error("Password must be 6 character long");
+    //     return false
+    // }
 
     return true;
 }

@@ -8,7 +8,7 @@ export default defineConfig({
     port: "3000",
     proxy: {
       "/auth": {
-        target: "http://localhost:5000/auth",
+        target: "http://localhost:5000/",
       }
     }
   }

@@ -20,7 +20,6 @@ const SignUp = () => {
 
     const handleSumbit = async(e) =>{
         e.preventDefault();
-        console.log(Inputs)
         await signup(Inputs)
     }
 
