@@ -34,7 +34,7 @@ const logout = async (req, res) =>{
             message: "Logged Out Successful"
         })
     } catch (error) {
-        console.log("Error in Login controller")
+        console.log("Error in Logout controller")
         res.status(500).json({error : error})
     }    
 }
