@@ -1,4 +1,7 @@
-const SingleChat = () => {
+import useConversation from "../../zustand/useConversation";
+
+const SingleChat = ({conversation, emoji, lastIdx}) => {
+    cos
     return (
         <>
             <div className="flex gap-2 items-center hover:bg-sky-500 rounded p-2 py-1 
@@ -6,7 +9,7 @@ const SingleChat = () => {
                 <div className="avatar online">
                     <div className="w-12 rounded-full ">
                         <img
-                            src="https://avatar.iran.liara.run/public/boy?username=Ayush"
+                            src={conversation.profilePic}
                             alt="User DP Avatar"
                         />
                     </div>
@@ -14,14 +17,14 @@ const SingleChat = () => {
 
                 <div className="flex flex-col flex-1">
                     <div className="flex gap-3 justify-between">
-                        <p className="font-bold text-gray-200"> John doe</p>
-                        <span className="text-xl">🦕</span>
+                        <p className="font-bold text-gray-200">{conversation.fullname}</p>
+                        <span className="text-xl">{emoji}</span>
                     </div>
                 </div>
             </div>
 
             {/* Adding the divider */}
-            <div className="divider my-0 py-0 h-1" />
+            {!lastIdx && <div className="divider my-0 py-0 h-1" />}
         </>
     );
 }
