@@ -1,7 +1,6 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
-// https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
   server: {
@@ -12,7 +11,10 @@ export default defineConfig({
       },
       "/users" : {
         target: "http://localhost:5000/users"
-      }
+      },
+      "/messges" : {
+        target: "http://localhost:5000/messages"
+      },
     }
   }
 })
