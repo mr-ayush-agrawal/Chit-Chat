@@ -9,6 +9,7 @@ const useGetConversation = () =>{
         const getConversation = async () => {
             setloading(true);
             try{
+                console.log("Getign users")
                 const res = await fetch ('/users')
                 console.log(res)
                 const data = await res.json()

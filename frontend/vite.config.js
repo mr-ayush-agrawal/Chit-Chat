@@ -9,6 +9,9 @@ export default defineConfig({
     proxy: {
       "/auth": {
         target: "http://localhost:5000/",
+      },
+      "/users" : {
+        target: "http://localhost:5000/users"
       }
     }
   }
