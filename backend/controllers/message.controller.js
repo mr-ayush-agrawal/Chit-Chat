@@ -1,5 +1,7 @@
 import Conversation from "../models/conversation.model.js";
 import Message from "../models/message.model.js"
+import { getReciverSocketId } from "../socket/socket.js";
+import io from 'socket.io'
 
 const sendMessage = async (req, res) => {
     try {
@@ -35,6 +37,13 @@ const sendMessage = async (req, res) => {
 
         // Ṭhis will run both tasks parallel
         Promise.all([convo.save(), newMessage.save()]);
+
+        // Socket.io functionality
+        const reciverSocketId = getReciverSocketId(reciverId)
+        if(reciverSocketId){
+            io.to(reciverSocketId).emit("newMessage", newMessage)
+            // io.to().emit() is used to send event to specific client
+        }
 
         res.status(201).json(newMessage)
     }
