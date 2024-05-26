@@ -1,8 +1,10 @@
 import express from "express";
 import dotenv from "dotenv" ;
 import cookieParser from "cookie-parser";
+import { app, server } from './socket/socket.js'
+
 dotenv.config();
-const app = express();
+
 
 import authRoutes from './routes/auth.routes.js'
 import msgRoutes from './routes/message.routes.js'
